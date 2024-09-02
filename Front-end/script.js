@@ -100,41 +100,34 @@ async function fetchWeatherByCoordinates(lat, lon) {
         hideLoader();
     }
 }
-function fetchWeather(city, source) {
-    showLoader();
-    console.log('Fetching weather data...');
-    
-    const url = `https://weather-api-backend-eta.vercel.app/api/weather/?city=${encodeURIComponent(city)}`;
-    console.log('Request URL:', url);
-    
-    $.ajax({
-        url: url,
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        },
-        success: function(data) {
-            console.log('Received data:', data);
 
-            if (city !== currentCity) {
-                summaryCache.delete(currentCity);
-            }
-
-            lastFetchedData = data;
-            currentCity = data.city;
-            displayWeather(data);
-            if (source !== 'fallback') hideError();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Detailed error in fetchWeather:', `Error: ${textStatus}, ${errorThrown}`);
-            showError(`An error occurred while fetching weather data. Error: ${textStatus}`);
-        },
-        complete: function() {
-            hideLoader();
+async function fetchWeather(city, source) {
+    try {
+        showLoader();
+        const response = await fetch(`https://weather-api-backend-eta.vercel.app/api/weather/?city=${encodeURIComponent(city)}`, {
+            mode: 'cors',  // Ensure CORS mode is set
+        });
+        const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
         }
-    });
+        
+        if (city !== currentCity) {
+            summaryCache.delete(currentCity);
+        }
+        
+        lastFetchedData = data;
+        currentCity = city;
+        displayWeather(data);
+        if (source !== 'fallback') hideError();
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        showError(`An error occurred while fetching weather data for ${city}. Please try again.`);
+    } finally {
+        hideLoader();
+    }
 }
-
 
 
 // Weather display functions

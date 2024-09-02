@@ -23,7 +23,7 @@ SECRET_KEY = "django-insecure-&wbay*zga4c7)kvof-3wks!m0k_1*(3oa1au=@vh_2+yy&mohx
 DEBUG = True
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
 
-ALLOWED_HOSTS = ['.vercel.app', "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # ALLOWED_HOSTS = []
@@ -140,7 +140,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Retrieve environment variables
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
