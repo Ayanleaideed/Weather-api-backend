@@ -104,28 +104,41 @@ async function fetchWeatherByCoordinates(lat, lon) {
 async function fetchWeather(city, source) {
     try {
         showLoader();
-        const response = await fetch(`http://127.0.0.1:8000/api/weather/?city=${encodeURIComponent(city)}`);
-        const data = await response.json();
+        console.log('Fetching weather data...');
+        const response = await fetch('https://weather-api-backend-eta.vercel.app/api/weather/', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
         
-        if (data.error) {
-            throw new Error(data.error);
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
+        const data = await response.json();
+        console.log('Received data:', data);
+
         if (city !== currentCity) {
             summaryCache.delete(currentCity);
         }
         
         lastFetchedData = data;
-        currentCity = city;
+        currentCity = data.city;
         displayWeather(data);
         if (source !== 'fallback') hideError();
     } catch (error) {
-        console.error('Error fetching weather data:', error);
-        showError(`An error occurred while fetching weather data for ${city}. Please try again.`);
+        console.error('Detailed error in fetchWeather:', error);
+        showError(`An error occurred while fetching weather data. Error: ${error.message}`);
     } finally {
         hideLoader();
     }
 }
+
+
 
 // Weather display functions
 function displayWeather(data) {
