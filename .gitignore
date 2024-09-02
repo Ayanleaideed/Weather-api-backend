@@ -1,0 +1,64 @@
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.mo
+*.pyo
+*.swp
+*.swo
+*.sqlite3
+db.sqlite3
+*.sqlite3-journal
+*.DS_Store
+
+# Django migrations
+**/migrations/**
+
+# Media
+media/
+
+# Static files
+staticfiles/
+static/
+
+# Ignore environment variables
+.env
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# MyPy
+.mypy_cache/
+
+# Pytest 
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.cache
+
+# Docker
+*.log
+docker-compose.override.yml
+.env.docker
+.env.prod
+Dockerfile
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
