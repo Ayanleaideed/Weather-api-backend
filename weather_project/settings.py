@@ -1,22 +1,26 @@
 
-
+import os 
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&wbay*zga4c7)kvof-3wks!m0k_1*(3oa1au=@vh_2+yy&mohx"
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', {})
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False)
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
+ALLOWED_HOSTS = ['.vercel.app']
 
 # Application definition
 
@@ -109,7 +113,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -119,8 +124,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # OPENWEATHERMAP_API_KEY = '2c312feae5584a94afd224146231208'
 
-
-OPENWEATHERMAP_API_KEY = "945ed49e5932c29ac840d19cc1bf1a0c"
-
 CORS_ALLOW_ALL_ORIGINS = True
-GEMINI_API_KEY = "AIzaSyCEjMQBdAT2O66-ZCSY7N-o7NbCLA-Dazg"
+
+# Retrieve environment variables
+OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')

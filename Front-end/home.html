@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+<body>
+  <div>
+    <pre id="weatherInfo" class="hidden"></pre>
+  </div>
+</body>
+<script>
+
+function testWeatherAPI() {
+  const API_KEY = "2c312feae5584a94afd224146231208";
+    const city = 'New York';
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod === '200') {
+                console.log('API call successful. Here\'s the data:', data);
+                alert('API call successful. Here\'s the data:\n' + JSON.stringify(data, null, 2));
+                document.getElementById('weatherInfo').textContent = JSON.stringify(data, null, 2);
+                displayWeatherForecast(data);
+            } else {
+                console.error('API call failed. Error:', data.message);
+                alert('API call successful. Here\'s the data:\n' + JSON.stringify(data, null, 2));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+// Call the function
+testWeatherAPI();
+
+
+function displayWeatherForecast(data) {
+    const weatherInfo = document.getElementById('weatherInfo'); // Assuming you have an element with this ID
+    weatherInfo.innerHTML = ''; // Clear previous content
+    
+    const cityName = document.createElement('h1');
+    cityName.textContent = `${data.city.name}, ${data.city.country}`;
+    weatherInfo.appendChild(cityName);
+    
+    const forecastList = data.list.filter((item, index) => index % 8 === 0); // Get one forecast per day
+    
+    forecastList.forEach(day => {
+        const date = new Date(day.dt * 1000);
+        const temp = day.main.temp;
+        const description = day.weather[0].description;
+        
+        const dayForecast = document.createElement('div');
+        dayForecast.innerHTML = `
+            <h3>${date.toDateString()}</h3>
+            <p>Temperature: ${temp}°C</p>
+            <p>Conditions: ${description}</p>
+        `;
+        weatherInfo.appendChild(dayForecast);
+    });
+    
+    weatherInfo.classList.remove('hidden');
+}
+
+// Call the function
+fetchWeather();
+</script>
+</html>

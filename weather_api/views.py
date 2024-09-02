@@ -9,8 +9,10 @@ from django.utils import timezone
 # In-memory storage for weather data
 weather_data_store = {}
 
+# endpoint for weather data: parameters: city: string 
 class WeatherView(View):
     def get(self, request):
+        # Get the city from the request, default to New York
         city = request.GET.get('city', 'New York')
         api_key = settings.OPENWEATHERMAP_API_KEY
         
@@ -21,7 +23,7 @@ class WeatherView(View):
         if response.status_code == 200:
             data = response.json()
             
-            # Process the data
+            # Process the data into a more usable format
             processed_data = {
                 'city': data['city']['name'],
                 'country': data['city']['country'],
@@ -41,13 +43,13 @@ class WeatherView(View):
                     } for item in data['list'][::8]  # Get data for every 24 hours
                 ]
             }
-            # Store the data in the in-memory dictionary for  ai summary generation 
+            # Store the data in the in-memory dictionary for AI summary generation 
             weather_data_store['latest'] = processed_data
             
             # Retrieve the last saved weather data for the city
             last_saved_weather = Weather.objects.filter(city=processed_data['city']).order_by('-id').first()
             
-            # Check if the last saved city matches the current one and the data is the same
+            # Check if the last saved city matches the current one and the data is different
             if not last_saved_weather or (
                 last_saved_weather.country != processed_data['country'] or
                 last_saved_weather.temperature != processed_data['current']['temp_c'] or
@@ -73,10 +75,10 @@ class WeatherView(View):
         else:
             return JsonResponse({'error': 'Unable to fetch weather data'}, status=400)
 
-
-
+# endpoint for weather data of given coordinates: parameters: lat: float, lon: float
 class GetWeatherByCoordinates(View):
     def get(self, request):
+        # Get latitude and longitude from the request
         latitude = request.GET.get('lat')
         longitude = request.GET.get('lon')
         api_key = settings.OPENWEATHERMAP_API_KEY
@@ -101,7 +103,7 @@ class GetWeatherByCoordinates(View):
                     'wind_speed': data['list'][0]['wind']['speed'],
                     'humidity': data['list'][0]['main']['humidity'],
                     'pressure': data['list'][0]['main']['pressure'], 
-                    "uv": 1
+                    "uv": 1  # Note: UV index is hardcoded to 1
                 },
                 
                 'forecast': [
@@ -116,10 +118,10 @@ class GetWeatherByCoordinates(View):
             # Store the data in the in-memory dictionary
             weather_data_store['latest'] = processed_data
             
-             # Retrieve the last saved weather data for the city
+            # Retrieve the last saved weather data for the city
             last_saved_weather = Weather.objects.filter(city=processed_data['city']).order_by('-id').first()
             
-            # Check if the last saved city matches the current one and the data is the same
+            # Check if the last saved city matches the current one and the data is different
             if not last_saved_weather or (
                 last_saved_weather.country != processed_data['country'] or
                 last_saved_weather.temperature != processed_data['current']['temp_c'] or
@@ -145,8 +147,7 @@ class GetWeatherByCoordinates(View):
             return JsonResponse({'error': 'Unable to fetch weather data'}, status=400)
 
 
-
-
+# endpoint for generating a summary of the weather: parameters: city: string, country: string
 class GenerateWeatherSummary(View):
     def get(self, request):
         # Retrieve the last weather data from the in-memory store
@@ -166,7 +167,8 @@ class GenerateWeatherSummary(View):
             return JsonResponse({'summary': formatted_summary})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-
+        
+    # function to prepare the prompt for the AI
     def prepare_prompt(self, weather_data):
         current = weather_data['current']
         forecast = weather_data['forecast']
@@ -180,20 +182,29 @@ class GenerateWeatherSummary(View):
         prompt += "Provide a brief 5-day forecast summary:\n"
         
         for day in forecast:
-            prompt += f"{day['date']}: Min {day['temp_min']}°C, Max {day['temp_max']}°C, {day['description']}\n You should be up in correct English. He's a friendly and make sure you do not add a weird syntax like markdown. This should be normal sentence."
+            prompt += f"- {day['date']}: {day['temp_min']}°C to {day['temp_max']}°C, {day['description']}\n"
         
-        prompt += "\nSummarize any notable changes in the weather and provide brief recommendations on what to wear."
+        # building a nice prompt for the Ai to generate weather summary based on the data 
+        prompt += "\nPlease provide:\n"
+        prompt += "NOTE: You're an AI agent who's an expert at meteorology."
+        prompt += "1. A brief summary of the overall weather trend.\n"
+        prompt += "2. Any notable changes or unusual weather patterns.\n"
+        prompt += "3. Practical recommendations for clothing and activities.\n"
+        prompt += "4. Any potential weather-related precautions or advisories.\n\n"
+        prompt += "Ensure the response is in clear, friendly language without any special formatting or markdown. "
+        prompt += "Aim for a conversational tone that's informative yet easy to understand for the general public."
         
         return prompt
-
+    # function to generate the summary using Gemini
     def generate_ai_summary(self, prompt):
         genai.configure(api_key=settings.GEMINI_API_KEY)
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
         return response.text
     
+    # function to format the summary for display
     def format_summary(self, summary):
         # Replace new lines with spaces and limit the text length
         cleaned_summary = summary.replace('\n', ' ')
         # Ensure the text is concise and easy to read
-        return cleaned_summary[:4000]  # Limit to a reasonable length 
+        return cleaned_summary[:5000]  # Limit to a reasonable length

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherPulse AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23F59E0B' viewBox='0 0 24 24' stroke='%23F59E0B'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 2v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 18.364l-1.414-1.414M12 20v2m-6.364-1.636l1.414-1.414M3 12H1m3.636-6.364l1.414 1.414M12 4a8 8 0 110 16 8 8 0 010-16z'/></svg>" type="image/svg+xml">
+    <script src="themes.js"></script>
+    <style>
+      
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-purple-600 dark:from-gray-800 dark:to-gray-900 min-h-screen flex items-center justify-center p-4 font-sans transition-colors duration-300">
+  <div class="bg-white bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl w-3/4 p-8 text-white transition-colors duration-300">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-3xl font-bold">WeatherPulse AI Dashboard</h1>
+            <button id="themeToggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+               
+                <i class="fas fa-moon hidden dark:inline"></i>
+                <i class="fas fa-sun inline dark:hidden"></i>
+              </button>
+              
+            
+        </div>
+
+        <div class="flex mb-4">
+            <input id="cityInput" type="text" placeholder="Enter city name" class="flex-grow px-3 py-2 rounded-l-full bg-white bg-opacity-20 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 text-white placeholder-gray-300 transition-colors duration-300">
+            <button id="searchBtn" class="bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-r-full transition duration-300 ease-in-out">Search</button>
+        </div>
+        <button id="locationBtn" class="w-full bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full mb-4 transition duration-300 ease-in-out">Use My Location</button>
+
+        <div id="error-component" class="hidden mb-4">
+          <div class="flex items-center justify-between p-3 bg-red-100 border border-red-400 text-red-700 rounded-md" role="alert">
+              <span class="font-bold">Error:</span>
+              <span id="error-message" class="ml-2"></span>
+              <button onclick="dismissError()" class="ml-auto text-red-500 hover:text-red-700 focus:outline-none">✕</button>
+          </div>
+        </div>
+
+        <div id="loader-overlay" class="overlay hidden">
+          <div class="loader-container">
+              <figure class="loader">
+                <div class="dot white"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </figure>
+          </div>
+        </div>
+
+        <div id="weatherInfo" class="hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="card bg-white bg-opacity-20 dark:bg-gray-700 rounded-lg p-4 transition-colors duration-300">
+                    <h2 id="cityName" class="text-2xl font-bold mb-1">New York City</h2>
+                    <p id="currentDate" class="text-lg mb-2"></p>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p id="temperature" class="text-5xl font-bold">25°F</p>
+                            <p id="weatherDescription" class="text-xl">Sunny</p>
+                        </div>
+                        <i id="weatherIcon" class="fas fa-sun text-5xl text-yellow-400"></i>
+                    </div>
+                </div>
+                <div class="card bg-white bg-opacity-20 dark:bg-gray-700 rounded-lg p-4 transition-colors duration-300">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-indigo-600 dark:bg-indigo-800 rounded-lg p-3 flex flex-col items-center justify-center">
+                            <i class="fas fa-wind text-3xl mb-1"></i>
+                            <p class="text-base font-bold">Wind</p>
+                            <p id="wind" class="text-xl">5 mph</p>
+                        </div>
+                        <div class="bg-blue-600 dark:bg-blue-800 rounded-lg p-3 flex flex-col items-center justify-center">
+                            <i class="fas fa-tint text-3xl mb-1"></i>
+                            <p class="text-base font-bold">Humidity</p>
+                            <p id="humidity" class="text-xl">60%</p>
+                        </div>
+                        <div class="bg-purple-600 dark:bg-purple-800 rounded-lg p-3 flex flex-col items-center justify-center">
+                            <i class="fas fa-compress-arrows-alt text-3xl mb-1"></i>
+                            <p class="text-base font-bold">Pressure</p>
+                            <p id="pressure" class="text-xl">29.92 inHg</p>
+                        </div>
+                        <div class="bg-yellow-600 dark:bg-yellow-800 rounded-lg p-3 flex flex-col items-center justify-center">
+                            <i class="fas fa-sun text-3xl mb-1"></i>
+                            <p class="text-base font-bold">UV Index</p>
+                            <p id="uvIndex" class="text-xl">5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-xl font-bold">5-Day Forecast</h3>
+                <div id="unitToggle" class="toggle-wrapper">
+                  <div class="toggle-option">°F</div>
+                  <div class="toggle-option">°C</div>
+                  <div class="toggle-switch"></div>
+                </div>
+            </div>
+            <div id="forecast" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-4"></div>
+            <button id="aiSummaryBtn" class="w-full bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mb-4 transition duration-300 ease-in-out">Generate AI Summary</button>
+            <div id="loader-ai" class="hidden flex items-center justify-center">
+            <section class="dots-container">
+              <div class="dot-ai"></div>
+              <div class="dot-ai"></div>
+              <div class="dot-ai"></div>
+              <div class="dot-ai"></div>
+              <div class="dot-ai"></div>
+            </section>
+            </div>
+            
+
+            <div id="aiSummary" class="hidden bg-indigo-600 dark:bg-indigo-800 rounded-lg p-3 transition-colors duration-300">
+                <p class="text-sm"></p>
+</div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
