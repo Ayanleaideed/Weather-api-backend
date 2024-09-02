@@ -77,7 +77,7 @@ function handleGeolocationError(error) {
 async function fetchWeatherByCoordinates(lat, lon) {
     try {
         showLoader();
-        const response = await fetch(`http://127.0.0.1:8000/api/weather/coordinates/?lat=${lat}&lon=${lon}`);
+        const response = await fetch(`https://weather-api-backend-eta.vercel.app/api/weather/coordinates/?lat=${lat}&lon=${lon}`);
         const data = await response.json();
         
         if (response.status !== 200) {
@@ -104,9 +104,7 @@ async function fetchWeatherByCoordinates(lat, lon) {
 async function fetchWeather(city, source) {
     try {
         showLoader();
-        const response = await fetch(`https://weather-api-backend-eta.vercel.app/api/weather/?city=${encodeURIComponent(city)}`, {
-            mode: 'cors',  // Ensure CORS mode is set
-        });
+        const response = await fetch(`https://weather-api-backend-eta.vercel.app/api/weather/?city=${encodeURIComponent(city)}`);
         const data = await response.json();
         
         if (data.error) {
@@ -128,7 +126,6 @@ async function fetchWeather(city, source) {
         hideLoader();
     }
 }
-
 
 // Weather display functions
 function displayWeather(data) {
@@ -223,7 +220,7 @@ async function generateAISummary() {
         // Simulate a delay (3 seconds)
         await new Promise(resolve => setTimeout(resolve, 3000));
 
-        const response = await fetch(`http://127.0.0.1:8000/api/weather/generate-weather-summary/?city=${encodeURIComponent(currentCity)}`);
+        const response = await fetch(`https://weather-api-backend-eta.vercel.app/api/weather/generate-weather-summary/?city=${encodeURIComponent(currentCity)}`);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
