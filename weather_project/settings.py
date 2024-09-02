@@ -122,13 +122,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# OPENWEATHERMAP_API_KEY = '2c312feae5584a94afd224146231208'
 
-
-OPENWEATHERMAP_API_KEY = "#"
-
-CORS_ALLOW_ALL_ORIGINS = True
-GEMINI_API_KEY = "#"
 
 # Retrieve environment variables
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
