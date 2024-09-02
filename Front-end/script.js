@@ -100,42 +100,39 @@ async function fetchWeatherByCoordinates(lat, lon) {
         hideLoader();
     }
 }
+function fetchWeather(city, source) {
+    showLoader();
+    console.log('Fetching weather data...');
+    
+    const url = `https://weather-api-backend-eta.vercel.app/api/weather/?city=${encodeURIComponent(city)}`;
+    console.log('Request URL:', url);
+    
+    $.ajax({
+        url: url,
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        },
+        success: function(data) {
+            console.log('Received data:', data);
 
-async function fetchWeather(city, source) {
-    try {
-        showLoader();
-        console.log('Fetching weather data...');
-        const response = await fetch('https://weather-api-backend-eta.vercel.app/api/weather/', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
-        
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
+            if (city !== currentCity) {
+                summaryCache.delete(currentCity);
+            }
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            lastFetchedData = data;
+            currentCity = data.city;
+            displayWeather(data);
+            if (source !== 'fallback') hideError();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Detailed error in fetchWeather:', `Error: ${textStatus}, ${errorThrown}`);
+            showError(`An error occurred while fetching weather data. Error: ${textStatus}`);
+        },
+        complete: function() {
+            hideLoader();
         }
-
-        const data = await response.json();
-        console.log('Received data:', data);
-
-        if (city !== currentCity) {
-            summaryCache.delete(currentCity);
-        }
-        
-        lastFetchedData = data;
-        currentCity = data.city;
-        displayWeather(data);
-        if (source !== 'fallback') hideError();
-    } catch (error) {
-        console.error('Detailed error in fetchWeather:', error);
-        showError(`An error occurred while fetching weather data. Error: ${error.message}`);
-    } finally {
-        hideLoader();
-    }
+    });
 }
 
 

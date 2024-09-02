@@ -135,9 +135,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",  
-    "https://weather-api-backend-eta.vercel.app/api/weather/",
+    "http://localhost:5500",
+    "https://weather-api-backend-eta.vercel.app",
 ]
+
 
 
 
