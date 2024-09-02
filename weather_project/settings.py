@@ -14,11 +14,11 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', {})
-
+# SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', {})
+SECRET_KEY = "django-insecure-&wbay*zga4c7)kvof-3wks!m0k_1*(3oa1au=@vh_2+yy&mohx"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
-
+# DEBUG = os.getenv('DEBUG', False)
+DEBUG = True
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
 ALLOWED_HOSTS = ['.vercel.app']
 
