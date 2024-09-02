@@ -2,13 +2,15 @@
 import os 
 from pathlib import Path
 from dotenv import load_dotenv
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env file
 load_dotenv()
-
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -20,10 +22,13 @@ SECRET_KEY = "django-insecure-&wbay*zga4c7)kvof-3wks!m0k_1*(3oa1au=@vh_2+yy&mohx
 # DEBUG = os.getenv('DEBUG', False)
 DEBUG = True
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
+
 ALLOWED_HOSTS = ['.vercel.app']
 
-# Application definition
 
+# ALLOWED_HOSTS = []
+
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -71,12 +76,19 @@ WSGI_APPLICATION = "weather_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+
+# vercel does not support sqlite3 so we need to use postgresql for the models 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': env.db('DATABASE_URL'),
 }
+
 
 
 # Password validation
@@ -127,3 +139,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Retrieve environment variables
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
