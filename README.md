@@ -4,8 +4,8 @@
 This is the backend component of WeatherPulse AI, a cutting-edge weather application that provides real-time weather information and forecasts with an AI-powered summary feature. This project was developed as part of the Software Engineer Intern - AI/ML Application Tech Assessment.
 
 ## Quick Links
-- **Video Demo**: [Watch the demo video] 
-https://github.com/user-attachments/assets/9007fa2c-fc00-462b-b1f3-ed49700020d6
+- **Video Demo**: [Watch the demo video]
+- https://github.com/user-attachments/assets/9007fa2c-fc00-462b-b1f3-ed49700020d6
 
 
 - 
