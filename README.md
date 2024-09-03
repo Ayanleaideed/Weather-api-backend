@@ -5,7 +5,9 @@ This is the backend component of WeatherPulse AI, a cutting-edge weather applica
 
 ## Quick Links
 - **Video Demo**: [Watch the demo video] 
-- https://github.com/user-attachments/assets/5b17fb26-ffe7-4bfc-b023-d4efe5fc430b
+https://github.com/user-attachments/assets/9007fa2c-fc00-462b-b1f3-ed49700020d6
+
+
 - 
 - **Live Backend REST API**: [https://weather-api-backend-eta.vercel.app/api/weather/](https://weather-api-backend-eta.vercel.app/api/weather/)
 - **Frontend Application**: [https://weather-front-end-sigma.vercel.app/](https://weather-front-end-sigma.vercel.app/)
