@@ -137,11 +137,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     # "http://localhost:5500",
     "https://weather-api-backend-eta.vercel.app",
-    "https://weather-front-end-sigma.vercel.app/"
+    "https://weather-front-end-sigma.vercel.app"  
 ]
 
-
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Retrieve environment variables
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
