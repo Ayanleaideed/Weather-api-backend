@@ -1,45 +1,25 @@
-# Weather-api-backend
-Software Engineer Intern - AI/ML Application Tech Assessment Backend using Django REST framework APIs
+# WeatherPulse AI Backend
 
-
-# WeatherPulse AI
-
-WeatherPulse AI is a cutting-edge weather application that provides real-time weather information and forecasts with an AI-powered summary feature. This project was developed as part of the Software Engineer Intern - AI/ML Application Tech Assessment.
+## Overview
+This is the backend component of WeatherPulse AI, a cutting-edge weather application that provides real-time weather information and forecasts with an AI-powered summary feature. This project was developed as part of the Software Engineer Intern - AI/ML Application Tech Assessment.
 
 ## Features
-
-- **Current Weather**: Users can enter a city name to get up-to-date weather information.
-- **5-Day Forecast**: Provides a detailed 5-day weather forecast for the selected location.
-- **Geolocation Support**: Users can get weather information based on their current location.
-- **AI-Generated Weather Summary**: Utilizing Gemini AI to generate concise and informative weather summaries.
-- **Interactive UI**: Clean and responsive design with dynamic weather icons and unit conversion.
+- **Weather Data Retrieval**: Fetches current weather and forecast data from OpenWeatherMap API.
+- **Geolocation Support**: Provides weather information based on latitude and longitude coordinates.
+- **AI-Generated Weather Summary**: Utilizes Google Generative AI (Gemini) to create concise and informative weather summaries.
+- **Data Caching**: Implements in-memory storage for efficient data retrieval and AI summary generation.
 
 ## Technology Stack
-
-### Frontend
-- HTML5, CSS3, JavaScript
-- Tailwind CSS for styling
-- Font Awesome for icons
-
-### Backend
 - Django (Python web framework)
 - Django REST Framework for API endpoints
 - OpenWeatherMap API for weather data
 - Google Generative AI (Gemini) for AI-powered summaries
 
 ## Setup and Installation
-
-### Prerequisites
-- Python 3.8+
-- Node.js and npm (for Tailwind CSS)
-- API keys for OpenWeatherMap and Google Generative AI (Gemini)
-
-### Backend Setup
-
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/weatherpulse-ai.git
-   cd weatherpulse-ai
+   git clone https://github.com/Ayanleaideed/Weather-api-backend.git
+   cd weather-api-backend
    ```
 
 2. Create a virtual environment and activate it:
@@ -70,59 +50,38 @@ WeatherPulse AI is a cutting-edge weather application that provides real-time we
    python manage.py runserver
    ```
 
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-   ```
-   cd frontend
-   ```
-
-2. Install Tailwind CSS:
-   ```
-   npm install -D tailwindcss
-   npx tailwindcss init
-   ```
-
-3. Configure Tailwind CSS by updating the `tailwind.config.js` file.
-
-4. Build the CSS:
-   ```
-   npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
-   ```
-
-5. Open `index.html` in a web browser or set up a local server to serve the frontend files.
-
 ## API Endpoints
-
 - `/api/weather/`: Get weather data for a specified city
+  - Method: GET
   - Query Parameters: `city` (string)
+
 - `/api/weather/coordinates/`: Get weather data for given coordinates
+  - Method: GET
   - Query Parameters: `lat` (float), `lon` (float)
-- `/api/weather/summary/`: Generate AI summary of weather data
-  - Query Parameters: `city` (string), `country` (string)
+
+- `/api/weather/generate-weather-summary/`: Generate AI summary of weather data
+  - Method: GET
+  - Query Parameters: `city` (string)
 
 ## Usage
+The backend is designed to be used in conjunction with the WeatherPulse AI frontend. It provides the necessary API endpoints for fetching weather data and generating AI summaries.
 
-1. Open the application in a web browser.
-2. Enter a city name in the search bar or click "Use My Location" for geolocation-based weather data.
-3. View the current weather, 5-day forecast, and other meteorological details.
-4. Click "Generate AI Summary" for an AI-powered analysis of the weather conditions.
+## Deployment
+The backend is currently deployed and accessible at:
+```
+https://weather-api-backend-eta.vercel.app/api/weather/
+```
 
 ## Contributing
-
-Contributions to WeatherPulse AI are welcome! Please feel free to submit pull requests, create issues or spread the word.
+Contributions to WeatherPulse AI Backend are welcome! Please feel free to submit pull requests, create issues or spread the word.
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
-
 - OpenWeatherMap for providing weather data
 - Google Generative AI (Gemini) for powering the AI summaries
-- Tailwind CSS for the sleek UI design
-- Font Awesome for the weather icons
+- Django and Django REST Framework for the robust backend architecture
 
 ---
-
 Developed with ❤️ by Ayanle
