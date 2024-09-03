@@ -4,7 +4,8 @@
 This is the backend component of WeatherPulse AI, a cutting-edge weather application that provides real-time weather information and forecasts with an AI-powered summary feature. This project was developed as part of the Software Engineer Intern - AI/ML Application Tech Assessment.
 
 ## Quick Links
-- **Video Demo**: [Watch the demo video](https://youtube.com)
+- **Video Demo**: [Watch the demo video]
+- https://github.com/user-attachments/assets/5b17fb26-ffe7-4bfc-b023-d4efe5fc430b
 - **Live Backend REST API**: [https://weather-api-backend-eta.vercel.app/api/weather/](https://weather-api-backend-eta.vercel.app/api/weather/)
 - **Frontend Application**: [https://weather-front-end-sigma.vercel.app/](https://weather-front-end-sigma.vercel.app/)
 - **Frontend Github repo**: https://github.com/Ayanleaideed/Weather-Front-end
