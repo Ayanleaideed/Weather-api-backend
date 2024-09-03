@@ -7,7 +7,7 @@ This is the backend component of WeatherPulse AI, a cutting-edge weather applica
 - **Video Demo**: [Watch the demo video](https://youtube.com)
 - **Live Backend REST API**: [https://weather-api-backend-eta.vercel.app/api/weather/](https://weather-api-backend-eta.vercel.app/api/weather/)
 - **Frontend Application**: [https://weather-front-end-sigma.vercel.app/](https://weather-front-end-sigma.vercel.app/)
-- **Frontend Github repo: https://github.com/Ayanleaideed/Weather-Front-end
+- **Frontend Github repo**: https://github.com/Ayanleaideed/Weather-Front-end
 
 ## Features
 - **Weather Data Retrieval**: Fetches current weather and forecast data from OpenWeatherMap API.
