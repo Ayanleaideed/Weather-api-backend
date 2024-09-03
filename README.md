@@ -3,6 +3,11 @@
 ## Overview
 This is the backend component of WeatherPulse AI, a cutting-edge weather application that provides real-time weather information and forecasts with an AI-powered summary feature. This project was developed as part of the Software Engineer Intern - AI/ML Application Tech Assessment.
 
+## Quick Links
+- **Video Demo**: [Watch the demo video](https://youtube.com)
+- **Live Backend REST API**: [https://weather-api-backend-eta.vercel.app/api/weather/](https://weather-api-backend-eta.vercel.app/api/weather/)
+- **Frontend Application**: [https://weather-front-end-sigma.vercel.app/](https://weather-front-end-sigma.vercel.app/)
+
 ## Features
 - **Weather Data Retrieval**: Fetches current weather and forecast data from OpenWeatherMap API.
 - **Geolocation Support**: Provides weather information based on latitude and longitude coordinates.
@@ -18,7 +23,7 @@ This is the backend component of WeatherPulse AI, a cutting-edge weather applica
 ## Setup and Installation
 1. Clone the repository:
    ```
-   git clone https://github.com/Ayanleaideed/Weather-api-backend.git
+   git clone https://github.com/yourusername/weather-api-backend.git
    cd weather-api-backend
    ```
 
@@ -66,12 +71,6 @@ This is the backend component of WeatherPulse AI, a cutting-edge weather applica
 ## Usage
 The backend is designed to be used in conjunction with the WeatherPulse AI frontend. It provides the necessary API endpoints for fetching weather data and generating AI summaries.
 
-## Deployment
-The backend is currently deployed and accessible at:
-```
-https://weather-api-backend-eta.vercel.app/api/weather/
-```
-
 ## Contributing
 Contributions to WeatherPulse AI Backend are welcome! Please feel free to submit pull requests, create issues or spread the word.
 
@@ -84,4 +83,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Django and Django REST Framework for the robust backend architecture
 
 ---
-Developed with ❤️ by Ayanle
+Developed with ❤️ by Ayanle Aideed
