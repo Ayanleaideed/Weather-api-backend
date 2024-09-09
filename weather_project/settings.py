@@ -140,7 +140,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://weather-front-end-sigma.vercel.app"  
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Retrieve environment variables
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
